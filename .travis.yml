@@ -6,7 +6,11 @@ before_install:
   - sudo apt-get update -qq
 install:
   - sudo apt-get install -qq libopencv-dev
+before_script:
+  - mkdir ./build
+  - cd ./build
 script:
-  - cd ./code && ./build-and-test.sh
+  - cmake ..
+  - make -j
 notifications:
   email: false
