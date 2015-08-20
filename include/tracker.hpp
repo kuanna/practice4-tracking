@@ -8,7 +8,7 @@ class Tracker
     virtual ~Tracker() {}
 
     virtual bool init( const cv::Mat& frame, const cv::Rect& initial_position ) = 0;
-    virtual bool track( const cv::Mat& frame, cv::Rect& new_position ) = 0;
+    virtual bool track( const cv::Mat& frame,const cv::Mat& frame_next, cv::Rect& new_position ) = 0;
 };
 
 cv::Ptr<Tracker> createTracker(const std::string &impl_name);

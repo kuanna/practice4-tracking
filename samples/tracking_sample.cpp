@@ -61,7 +61,7 @@ int main( int argc, const char** argv )
     }
 
     // Get the first frame
-    cv::Mat frame;
+    cv::Mat frame, frame_next;
     cap >> frame;
 
     // Initialize GTReader and PrecisionRecallEvaluator
@@ -88,17 +88,19 @@ int main( int argc, const char** argv )
         return 1;
     }
 
+	cap >> frame;
+
     // Run tracking
     while (true)
     {
         // Fetch next frame
-        cap >> frame;
-        if(frame.empty())
+        cap >> frame_next;
+        if(frame_next.empty())
             break;
 
         // Track object
         cv::Rect position;
-        bool found = tracker->track(frame, position);
+        bool found = tracker->track(frame, frame_next, position);
 
         // Compare the predicted position with ground truth, if known
         cv::Rect gt = gt_reader.next();
@@ -108,6 +110,7 @@ int main( int argc, const char** argv )
             // Make rect red, if the prediction is incorrect
             rect_color = cv::Scalar(0, 0, 255);
         }
+		frame = frame_next;
 
         // Display frame with predicted and ground truth rectangles, if known
         if (!gui.displayImage(frame,
