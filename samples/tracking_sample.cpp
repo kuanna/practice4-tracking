@@ -31,7 +31,7 @@ static const char* keys =
     "{3 | | 0,0,0,0         | Initial bounding frame    }"
 };
 
-int main( int argc, char** argv )
+int main( int argc, const char** argv )
 {
     cv::CommandLineParser parser( argc, argv, keys );
 
